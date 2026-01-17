@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>AR Pizza Menu</title>
-
   <script type="module"
     src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
   </script>
@@ -11,48 +10,101 @@
   <style>
     body {
       margin: 0;
-      background: #ffffff;
-      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ff6b6b, #feca57);
+      font-family: 'Arial', sans-serif;
       text-align: center;
+      padding: 20px;
+    }
+
+    h2 {
+      color: #333;
+      font-size: 2.5em;
+      margin: 20px 0;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     }
 
     model-viewer {
       width: 100vw;
       height: 85vh;
+      background-color: #f0f0f0;
+      border-radius: 20px;
+      margin: 10px 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
     .ar-button {
-      background: #000;
+      background: linear-gradient(45deg, #ff416c, #ff4b2b);
       color: #fff;
-      padding: 14px 20px;
-      font-size: 18px;
-      border-radius: 8px;
+      padding: 16px 30px;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 50px;
       border: none;
       cursor: pointer;
+      margin: 10px;
+      box-shadow: 0 8px 25px rgba(255,65,108,0.4);
+      transition: all 0.3s ease;
+    }
+
+    .ar-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(255,65,108,0.6);
+    }
+
+    .instructions {
+      color: #666;
+      font-size: 18px;
+      margin-top: 15px;
+      max-width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Steam animation overlay */
+    model-viewer::after {
+      content: '';
+      position: absolute;
+      top: 10%; left: 10%; right: 10%; height: 20%;
+      background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: steam 4s infinite ease-in-out;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    @keyframes steam {
+      0%, 100% { opacity: 0.3; transform: scale(0.8) translateY(0); }
+      50% { opacity: 0.8; transform: scale(1.2) translateY(-10px); }
     }
   </style>
 </head>
 
 <body>
+  <h2>🍕 Pizza</h2>
 
-<h2>Pizza</h2>
+  <model-viewer
+    src="pizza.glb"
+    ios-src="pizza.usdz"
+    ar 
+    ar-modes="webxr scene-viewer quick-look"
+    ar-placement="floor"
+    ar-scale="auto"
+    camera-controls
+    auto-rotate
+    shadow-intensity="1"
+    environment-image="neutral"
+    loading="eager"
+    animation-crossfade-duration="500"
+    poster="https://via.placeholder.com/400x300/DDD/666?text=Pizza+Loading...">
 
-<model-viewer
-  src="pizza.glb"
-  ar
-  ar-modes="scene-viewer webxr quick-look"
-  ar-placement="floor"
-  camera-controls
-  shadow-intensity="1">
+    <!-- CUSTOM AR BUTTON - Launches camera interface -->
+    <button slot="ar-button" class="ar-button">
+      📱 View Pizza in AR
+    </button>
+  </model-viewer>
 
-  <!-- CUSTOM AR BUTTON -->
-  <button slot="ar-button" class="ar-button">
-    View in AR
-  </button>
-
-</model-viewer>
-
-<p>Tap the button to place the pizza on your table</p>
-
+  <p class="instructions">
+    Tap the button to launch camera → Pizza appears on your table → Move phone around to see it from all angles!
+  </p>
 </body>
 </html>
